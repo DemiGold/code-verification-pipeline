@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project
+*.log
+*.sqlite
+.coverage
+htmlcov/
+dist/
+build/
+
+# Supabase
+supabase/.temp/__pycache__/
+*.pyc
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+supabase/.temp/

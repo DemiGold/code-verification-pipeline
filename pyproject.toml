@@ -1,0 +1,66 @@
+# Python environment and project dependencies.
+# To install all dependencies for development:
+#   pip install -e ".[dev]"
+
+[project]
+name = "code-verification-pipeline"
+version = "0.1.0"
+description = "Event-driven pipeline for sandboxing untrusted code and routing to human review."
+requires-python = ">=3.11"
+
+dependencies = [
+    # --- API Layer ---
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+
+    # --- Data Validation & Settings ---
+    "pydantic>=2.9.0",
+    "pydantic-settings>=2.6.0",
+
+    # --- Database ---
+    # Direct async driver for Postgres. Avoids ORM overhead for the
+    # high-frequency, relatively simple queries in the API.
+    "asyncpg>=0.30.0",
+
+    # --- Background Queue ---
+    # Decouples the HTTP request from the heavy 30s+ sandbox execution.
+    "celery[redis]>=5.4.0",
+    "redis>=5.2.0",
+
+    # --- Infrastructure & Services ---
+    # Docker SDK: programmatically spawn isolated containers.
+    "docker>=7.1.0",
+    # HTTP client: talks to the GitHub API and the email provider.
+    "httpx>=0.27.0",
+    "resend>=2.5.0",
+    # Internal dashboard for human reviewers.
+    "streamlit>=1.40.0",
+
+    # --- Reporting ---
+    # Renders the markdown audit report into HTML for emails.
+    "markdown>=3.7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "ruff>=0.7.0",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+# --- Tool Configurations ---
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
